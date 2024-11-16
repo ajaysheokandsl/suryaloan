@@ -72,10 +72,10 @@ export default function MultiStepForm(props) {
   const [getUploadstatsalary, setUploadstatsalary] = useState("")
   const [getUploadstatbill, setUploadstatbill] = useState("")
 
-  const [getStateList, setStateList] = useState([{}])
+  const [getStateList, setStateList] = useState([])
 
-  const [getCityList, setCityList] = useState([{}])
-  const [getPincodeList, setPincodeList] = useState([{}])
+  const [getCityList, setCityList] = useState([])
+  const [getPincodeList, setPincodeList] = useState([])
   const [selectedEmploymentType, setSelectedEmploymentType] = useState("")
   const [getCustname, setCustname] = useState("")
   const [getPersoanlDetail, setPersoanlDetail] = useState({})
@@ -408,7 +408,7 @@ export default function MultiStepForm(props) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           } else if (dataset.data.pan_verification === "DONE") {
             if (dataset.data.personal_details === "PENDING") {
-              setCustname(dataset.data.first_name)
+              setCustname(dataset?.data.first_name)
               setLoading(false)
               props.showmessage(dataset.Message)
               setActiveStep((prevActiveStep) => prevActiveStep + 2)
@@ -447,7 +447,7 @@ export default function MultiStepForm(props) {
       } else {
         setLoading(true)
         const resp = await fetch(
-          `${apiBaseURL}/UserApi/panVerification`,
+          `${apiBaseURL}/VerifyApi/panVerification`,
           {
             method: "POST",
             headers: {
@@ -1263,7 +1263,7 @@ export default function MultiStepForm(props) {
                       name="city_id"
                       id=""
                       onChange={(e) => {
-                        setPincodeList([])
+                          setPincodeList([])
                         get_pincode(e.target.value)
                         setPersoanlDetail({
                           ...getPersoanlDetail,
@@ -1271,7 +1271,7 @@ export default function MultiStepForm(props) {
                         })
                       }}>
                       <option value={""}>Select City</option>
-                      {getCityList.map((e, index) => {
+                      {getCityList?.map((e, index) => {
                         return (
                           <option value={e["m_city_id"]}>
                             {e["m_city_name"]}
